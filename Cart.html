@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <style>
+          #container
+          {
+               display: grid;
+               grid-template-columns: repeat(4,1fr);
+               grid-template-rows: auto;
+               gap: 20px;
+               text-align: center;
+          }
+          .price
+          {
+               display: flex;
+               justify-content: space-around;
+               margin-bottom: -30px;
+          }
+          .strikPrice{
+               text-decoration: line-through;
+          }
+          .btn1
+          {
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+          }
+          .btn1:hover
+          {
+            background-color: red;
+          }
+          h1
+          {
+               color: blue;
+               text-align: center;
+          }
+          h2
+          {
+               color: red;
+               text-align: center;
+          }
+          #container1
+          {
+               display: flex;
+              justify-content: center;
+              
+          }
+          #discount
+          {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer; 
+            background-color: greenyellow; 
+            margin: 10px;
+          }
+          #discount:hover{
+               background-color: white;
+               cursor: pointer;
+          }
+          #promo
+          {
+               height: 30px;
+               margin-top: 10px;
+               border-radius: 10px;
+          }
+          #ckeckout
+          {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer; 
+            background-color: red; 
+            margin: 10px; 
+            margin-left: 45%;
+            margin-top: 10px;
+          }
+          a{
+               text-decoration: none;
+               color: black;
+          }
+          #ckeckout:hover{
+               background-color: green;
+               cursor: pointer;
+               
+          }
+          
+     </style>
+</head>
+<body>
+     <h1>Add to cart Section</h1>
+     <h2></h2>
+     <div id="container1">
+     <input type="text" id="promo" placeholder="Enter Promocode">
+     <button id="discount">Apply Promo</button>
+     </div>
+     <button id="ckeckout"><a href="Payment.html">Pay Now</a></button>
+     
+     <div id="container"></div>
+</body>
+</html>
+<script>
+     var cartData = JSON.parse(localStorage.getItem("cart"))||[];
+     // console.log(cartData);
+     var total = cartData.reduce(function(sum,el,i,arr){
+          return (sum+Number(el.price));
+     },0);
+     var total1=total;
+     // console.log("Total price "+total);
+     
+     document.querySelector("#discount").addEventListener("click",promoFun);
+     function promoFun()
+     {
+          var promo = document.querySelector("#promo").value;
+          total= (total*7)/10;
+          total.toFixed(2);//to fixed decimal up to 2 places in total price
+          // console.log("inside Promo",promo);
+          var count=0;
+          if(promo=="masai30" && count==0)
+          {
+               count++;
+               console.log(count);
+               document.querySelector("h1").innerText=`You have ${length} Item in cart and total price after discount is RS: ${total}`;
+               total1.toFixed(2);
+               document.querySelector("h2").innerText=`Total price is RS: ${total1}`;
+               
+               
+          }
+     }
+
+
+
+     var length=cartData.length;
+     // console.log("Total length "+length);
+     document.querySelector("h1").innerText=`You have ${length} Item in cart and total is RS: ${total}`;
+     cartData.map(function(el,i,arr){
+     console.log(el,i);
+     var box1=document.createElement("div");
+     var image1 = document.createElement("img");
+     image1.src = el.image_url;
+     var name1=document.createElement("p");
+     name1.innerText=el.name;
+     var box2=document.createElement("div");
+     var price1=document.createElement("p");
+     price1.innerText=el.price;
+     var strikedoffprice1 = document.createElement("p");
+     strikedoffprice1.innerText=el.strikedoffprice;
+     box2.append(price1,strikedoffprice1);
+     var btn=document.createElement("button");
+     btn.innerText="Remove";
+     box1.append(image1,name1,box2,btn);
+     document.querySelector("#container").append(box1);
+     box2.setAttribute("class","price")
+     btn.setAttribute("class","btn1");
+     strikedoffprice1.setAttribute("class","strikPrice");
+     btn.addEventListener("click",function(el,i,arr){
+          removeItem(el,i)
+     });
+     });
+
+     function removeItem(el,i)
+         {
+              console.log(el,i);
+              var x= cartData.splice(i,1);
+              console.log(x);
+              localStorage.setItem("cart",JSON.stringify(cartData));
+              window.location.reload(); //iss sa remove karna k baad page refresh ho jaata hai aur content update ho jaata hai
+         }
+</script>

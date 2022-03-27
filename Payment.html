@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Payment Gateway</title>
+     <style>
+          h1
+          {
+               text-align: center;
+               border: 1px solid #2874f0;
+               padding-bottom: 10px;
+               background-color: #2874f0;
+               color: white;
+               border-radius: 10px;
+          }
+          form
+          {
+               width: 15%;
+               margin: auto;
+          }
+          input
+          {
+               width: 300px;
+               height: 40px;
+               margin-bottom: -10px;
+               border-radius: 5px;
+          }
+          h4
+          {
+               font-size: 20px;
+               margin-bottom: 2px;
+          }
+     </style>
+</head>
+<body>
+     <h1>Payment Gateway</h1>
+     <form>
+          <h4>Name</h4>
+          <input type="text" id="name" placeholder="Enter Name">
+          <h4>Card Number</h4>
+          <input type="number" id="cardNum" placeholder="Enter Card Number">
+          <h4>CCV</h4>
+          <input type="number" id="ccv" placeholder="Enter CCV">
+          <h4>Expiry Date</h4>
+          <input id="expiry" type="month" min="2022-02" value="2022-02">
+          <br>
+          <br>
+          <input type="submit" value="Pay Now" style="background-color: #f1c65a;border-radius: 10px;">
+     </form>
+</body>
+</html>
+<script>
+     document.querySelector("form").addEventListener("submit",payFun);
+     function payFun()
+     {
+          event.preventDefault();
+          var name = document.querySelector("#name").value;
+          var cardNum = document.querySelector("#cardNum").value;
+          var ccv = document.querySelector("#ccv").value;
+          var expiry = document.querySelector("#expiry").value;
+          // console.log(name,cardNum,ccv,expiry);
+          var cardCheck=(cardNum=="1234567890"||cardNum=="1234567891"||cardNum=="1234567892"||cardNum=="1234567893"||cardNum=="1234567894"||cardNum=="1234567895");
+           var ccvCheck= (ccv==123||ccv==124||ccv==125||ccv==126||ccv==127||ccv==128||ccv==129);
+          if(name&&cardCheck&&ccvCheck&& expiry)
+          {
+              alert("Enter OTP")
+               window.location.href="otp.html";
+
+          }
+          else
+          {
+               alert("error");
+          }
+
+
+          document.querySelector("#name").value="";
+          document.querySelector("#cardNum").value="";
+          document.querySelector("#ccv").value="";
+          document.querySelector("#expiry").value="2022-02";
+     }
+</script>
